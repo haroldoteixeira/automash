@@ -14,6 +14,8 @@ void AppDisplay::printLine1(String stage, boolean autoStep) {
   lcdDisplay->writeDisplay(stage, 0, 0);
   if (autoStep) {
     lcdDisplay->writeDisplay(" AUT", 16, 0);
+  } else {
+    lcdDisplay->writeDisplay(" MAN", 16, 0);
   }
 }
 
@@ -60,4 +62,11 @@ void AppDisplay::splashScreen() {
    delay(3000); 
    lcdDisplay->clear();
 }
+
+void AppDisplay::startScreen() {
+  lcdDisplay->clear();
+  lcdDisplay->writeDisplay("PRESS BUTTON TO", 2, 1);
+  lcdDisplay->writeDisplay("START SESSION", 3, 2);
+}
+
 

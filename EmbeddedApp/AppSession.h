@@ -1,7 +1,8 @@
 #include "TemperatureSensor.h"
 #include "AppDisplay.h"
-#include "TimeCounter.h"
 #include "Button.h"
+#include "Buzzer.h"
+#include "MashStep.h"
 
 // State definition constants
 #define INITIAL 0
@@ -13,6 +14,7 @@
 #define TEMP_SENSOR_PIN 2
 #define TEMP_SENSOR_RES 10
 #define BUTTON_PIN 5
+#define BUZZER_PIN 4
 
 class AppSession {
  
@@ -20,7 +22,10 @@ class AppSession {
     TemperatureSensor *_tempSensor;
     AppDisplay *_display;
     Button *_button;
-
+    Buzzer *_buzzer;
+    MashStep *_mashStep[9];
+    int _curStep = 0;
+    int _stepCount;
     
     float _curTemperature;
     TimeCounter _sessionTimer;
@@ -30,7 +35,12 @@ class AppSession {
     int collectSessionTime();
     int updateState();
     void processInitialState();
+    void processHeatingState();
+    void processRunningState();
+    void processWait();
     void startSession();
+    void nextStep();
+    void initializeSessionList();
     
   public:
     AppSession(AppDisplay *display);

@@ -11,5 +11,6 @@ class TimeCounter {
     void start();
     void update();
     String getTimeCount();
+    int getMinutesCount();
     
 };

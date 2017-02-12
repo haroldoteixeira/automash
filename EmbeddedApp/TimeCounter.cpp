@@ -20,3 +20,7 @@ String TimeCounter::getTimeCount() {
   return returnMessage;
 }
 
+int TimeCounter::getMinutesCount() {
+  return (_counterValue/60);
+}
+
