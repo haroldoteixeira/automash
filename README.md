@@ -5,4 +5,4 @@ Arduino automatic mash process control
 - Execution of prior unversioned automash features
 - Automatic / Manual steps
 - Use of standard LCD display
-- Inclusion of buzzer for alarm step ending
+- PID control during mash steps
