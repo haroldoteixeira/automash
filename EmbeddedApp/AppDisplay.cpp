@@ -69,4 +69,9 @@ void AppDisplay::startScreen() {
   lcdDisplay->writeDisplay("START SESSION", 3, 2);
 }
 
+void AppDisplay::clearScreen() {
+  
+  lcdDisplay->clear();
+
+}
 

@@ -14,6 +14,7 @@ class AppDisplay {
     void printMetrics(String stage, boolean auto, float curTemp, float stepTemp, String curTime, String stepTime, String sessionTime, String sessionStatus);
     void splashScreen();
     void startScreen();
+    void clearScreen();
    
 };
 

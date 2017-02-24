@@ -1,11 +1,14 @@
 #include "MashStep.h"
 
+
 MashStep::MashStep(int progTime, float progTemp, String stepName, boolean autoStep) {
    _auto = autoStep;
    _progTime = progTime;
    _progTemp = progTemp;
    _stepName = stepName;
    _resistance = new ElectricalResistance(RES_PIN);
+   _pidControl = new PIDResistanceControl((double)progTemp);
+   _pidControl->setParameters(KD, KI, KD);
    
 }
 
@@ -25,13 +28,12 @@ int MashStep::updateState(float curTemp) {
       processRunningState(curTemp);
       break;
     case STEP_WAIT:
-      //processWaitingStep();
+      processWaitingState(curTemp);
       break;
     default:
       break;
   }
-  Serial.println("Estado: ");
-  Serial.println(_stepState);
+  
   return _stepState;
 }
 
@@ -45,16 +47,23 @@ void MashStep::processInitialState(float curTemp) {
   } 
 }
 
+void MashStep::processWaitingState(float curTemp) {
+  _curTime.update();
+  int output = round(_pidControl->computeOutput(curTemp));
+  _resistance->partialSet(output);
+}
+
 void MashStep::processRunningState(float curTemp) {
   _curTime.update();
-  Serial.print("Temp: ");
-  Serial.println(_curTime.getMinutesCount());
   if (_curTime.getMinutesCount() < _progTime) {
-    //Lógica acionamento resistencia
+    int output = round(_pidControl->computeOutput(curTemp));
+    _resistance->partialSet(output);
     _stepState = STEP_RUN;
+    Serial.println(output);
   } else {
     if (_auto) {
       _stepState = STEP_DONE;
+      _resistance->turnOff();
     } else {
       _stepState = STEP_WAIT;  
     }

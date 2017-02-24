@@ -5,7 +5,7 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <Time.h>
-
+#include <PID_v1.h>
 
 // Applicarion really necessary include files
 #include "AppSession.h"

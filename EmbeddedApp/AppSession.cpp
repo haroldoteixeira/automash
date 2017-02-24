@@ -3,8 +3,8 @@
 
 void AppSession::initializeSessionList(){
    
-   _mashStep[0] = new MashStep(1, 28, "ACID REST", FALSE);
-   _mashStep[1] = new MashStep(1, 33, "PROTEIN REST", TRUE);
+   _mashStep[0] = new MashStep(1, 32, "ACID REST", FALSE);
+   _mashStep[1] = new MashStep(1, 34, "PROTEIN REST", TRUE);
    _stepCount = 2; 
 }
 
@@ -39,17 +39,19 @@ int AppSession::updateState() {
      break;
     case HEATING:
      processHeatingState();
-    case RUNNING:
-     processRunningState();
      break;
     default:
+     processRunningState();
      break;
   }
 }
 
 void AppSession::processInitialState() {
-  if (_button->getState() == LOW) {
-    startSession(); 
+    int buttonVal = _button->getState();
+    Serial.print("Botão: ");
+    Serial.println(buttonVal);
+    if (buttonVal == HIGH) {    
+      startSession(); 
   } 
     
 }
@@ -58,6 +60,7 @@ void AppSession::startSession() {
   _sessionTimer.start();
   _sessionState = HEATING;
   initializeSessionList();
+  _display->clearScreen();
   _mashStep[_curStep]->start();
 }
 
@@ -96,7 +99,11 @@ void AppSession::nextStep() {
 
 void AppSession::processWait() {
     
-    if (_button->getState() == LOW) {
+    int buttonVal = _button->getState();
+    Serial.print("Botão: ");
+    Serial.println(buttonVal);
+    _sessionState = WAITING;
+    if (buttonVal == HIGH) {
       nextStep();
     }
 }
@@ -107,11 +114,15 @@ void AppSession::refreshStatus() {
   if (_sessionState != INITIAL) {
     float progTemp = 0.0;
     String progTime = "000:00";
+    String curTime = "000:00";
     if (_sessionState != DONE) {
       progTemp = _mashStep[_curStep]->getProgTemp();
       progTime = _mashStep[_curStep]->getProgTime();
+      curTime = _mashStep[_curStep]->getCurTime();
+      _display->printMetrics(_mashStep[_curStep]->getStepName(), _mashStep[_curStep]->getAutoFlag(), _curTemperature, progTemp, curTime, progTime, _sessionTimer.getTimeCount(), stateLabel[_sessionState]);
+    } else {
+      _display->printMetrics("MASH COMPLETE", "   ", _curTemperature, 0.0, "000:00", "000:00", _sessionTimer.getTimeCount(), stateLabel[_sessionState]); 
     }
-    _display->printMetrics(_mashStep[_curStep]->getStepName(), _mashStep[_curStep]->getAutoFlag(), _curTemperature, progTemp, _mashStep[_curStep]->getCurTime(), progTime, _sessionTimer.getTimeCount(), stateLabel[_sessionState]); 
   } else {
     _display->startScreen();
   }
