@@ -7,9 +7,14 @@ MashStep::MashStep(int progTime, float progTemp, String stepName, boolean autoSt
    _progTemp = progTemp;
    _stepName = stepName;
    _resistance = new ElectricalResistance(RES_PIN);
-   _pidControl = new PIDResistanceControl((double)progTemp);
-   _pidControl->setParameters(KD, KI, KD);
+//   _pidControl = new PIDResistanceControl((double)progTemp);
+//   _pidControl->setParameters(KD, KI, KD);
    
+}
+
+MashStep::~MashStep() {
+  delete _resistance;
+//  delete _pidControl;
 }
 
 void MashStep::start() {
@@ -49,17 +54,29 @@ void MashStep::processInitialState(float curTemp) {
 
 void MashStep::processWaitingState(float curTemp) {
   _curTime.update();
-  int output = round(_pidControl->computeOutput(curTemp));
-  _resistance->partialSet(output);
+  /*int output = round(_pidControl->computeOutput(curTemp));
+  _resistance->partialSet(output);*/
+  // update for onoff control. PID parameters not working
+  if (curTemp < _progTemp) {
+      _resistance->turnOn();
+    } else {
+      _resistance->turnOff();
+    }
 }
 
 void MashStep::processRunningState(float curTemp) {
   _curTime.update();
   if (_curTime.getMinutesCount() < _progTime) {
-    int output = round(_pidControl->computeOutput(curTemp));
-    _resistance->partialSet(output);
+ /*   int output = round(_pidControl->computeOutput(curTemp));
+    _resistance->partialSet(output); */
+    // FIX1: OnOff Control to evaluate PID parameters
+    if (curTemp < _progTemp) {
+      _resistance->turnOn();
+    } else {
+      _resistance->turnOff();
+    }
     _stepState = STEP_RUN;
-    Serial.println(output);
+    
   } else {
     if (_auto) {
       _stepState = STEP_DONE;

@@ -42,10 +42,11 @@ class AppSession {
     void nextStep();
     void initializeSessionList();
     
+    
   public:
     AppSession(AppDisplay *display);
     void collectData();
     void refreshStatus();
-   
+    void logData();
     
 };

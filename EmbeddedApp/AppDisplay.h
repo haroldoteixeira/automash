@@ -15,6 +15,7 @@ class AppDisplay {
     void splashScreen();
     void startScreen();
     void clearScreen();
+    ~AppDisplay();
    
 };
 

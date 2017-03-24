@@ -29,10 +29,10 @@ void setup() {
 
 void loop() {
   
-  //int buttonState = button.getState();
+  
   session->collectData();
   session->refreshStatus();
-   //resistance.partialSet(50);
+  session->logData();
   
   
     

@@ -8,8 +8,8 @@
 #define STEP_WAIT 2
 #define STEP_DONE 3
 #define RES_PIN 3
-#define KP 64
-#define KI 5
+#define KP 90
+#define KI 3
 #define KD 5
 
 class MashStep {
@@ -29,6 +29,7 @@ class MashStep {
     
   public:
     MashStep(int progTime, float progTemp, String stepName, boolean autoStep);
+    ~MashStep();
     void start();
     int updateState(float curTemp);
     String getStepName();

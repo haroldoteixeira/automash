@@ -9,6 +9,10 @@ AppDisplay::AppDisplay() {
   lcdDisplay->setBacklight(HIGH);
 }
 
+AppDisplay::~AppDisplay() {
+  delete lcdDisplay;  
+}
+
 void AppDisplay::printLine1(String stage, boolean autoStep) {
 
   lcdDisplay->writeDisplay(stage, 0, 0);
@@ -58,7 +62,7 @@ void AppDisplay::printMetrics(String stage, boolean autoStep, float curTemp, flo
 void AppDisplay::splashScreen() {
    lcdDisplay->clear();
    lcdDisplay->writeDisplay("Automash", 6, 1);
-   lcdDisplay->writeDisplay("Ver. 0.1", 6, 2);
+   lcdDisplay->writeDisplay("Ver. 0.2", 6, 2);
    delay(3000); 
    lcdDisplay->clear();
 }

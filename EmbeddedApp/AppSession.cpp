@@ -3,9 +3,10 @@
 
 void AppSession::initializeSessionList(){
    
-   _mashStep[0] = new MashStep(1, 32, "ACID REST", FALSE);
-   _mashStep[1] = new MashStep(1, 34, "PROTEIN REST", TRUE);
-   _stepCount = 2; 
+   _mashStep[0] = new MashStep(10, 52, "PROTEIN REST", FALSE);
+   _mashStep[1] = new MashStep(60, 64, "SACARIFICATION", FALSE);
+   _mashStep[2] = new MashStep(15, 77, "MASH OUT", FALSE);
+   _stepCount = 3; 
 }
 
 AppSession::AppSession(AppDisplay *display) {
@@ -127,3 +128,16 @@ void AppSession::refreshStatus() {
     _display->startScreen();
   }
 }
+
+void AppSession::logData() {
+
+  char stringTemp[6];
+  
+  dtostrf(_curTemperature, 4, 2, stringTemp);
+  Serial.print(_sessionTimer.getTimeCount());
+  Serial.print(";");
+  Serial.print((_curStep+1));
+  Serial.print(";");
+  Serial.println(stringTemp);
+}
+
