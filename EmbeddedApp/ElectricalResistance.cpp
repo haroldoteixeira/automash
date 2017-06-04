@@ -26,3 +26,4 @@ void ElectricalResistance::partialSet(int percentage) {
   analogWrite(resistancePin, dutyCycle);
 }
   
+

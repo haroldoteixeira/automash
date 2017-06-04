@@ -14,3 +14,4 @@ class TimeCounter {
     int getMinutesCount();
     
 };
+

@@ -8,3 +8,4 @@ class Button {
     Button(int pin);
     int getState();
 };
+

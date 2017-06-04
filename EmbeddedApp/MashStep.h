@@ -39,3 +39,4 @@ class MashStep {
     boolean getAutoFlag();
     
 };
+

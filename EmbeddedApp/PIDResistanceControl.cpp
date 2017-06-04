@@ -22,3 +22,4 @@ double PIDResistanceControl::computeOutput(double input) {
     Serial.println(_output);
     return _output;   
 }
+

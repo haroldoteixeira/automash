@@ -14,3 +14,4 @@ class TemperatureSensor {
       void setResolution (int sensorResolution);
       float getTemperature();
 };
+

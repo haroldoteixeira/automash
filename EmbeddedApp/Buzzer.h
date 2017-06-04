@@ -12,3 +12,4 @@ class Buzzer {
   void play(int frequency);
   void mute();
 };
+

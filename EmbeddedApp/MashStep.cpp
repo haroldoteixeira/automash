@@ -6,7 +6,7 @@ MashStep::MashStep(int progTime, float progTemp, String stepName, boolean autoSt
    _progTime = progTime;
    _progTemp = progTemp;
    _stepName = stepName;
-   _resistance = new ElectricalResistance(RES_PIN);
+   
 //   _pidControl = new PIDResistanceControl((double)progTemp);
 //   _pidControl->setParameters(KD, KI, KD);
    
@@ -20,11 +20,11 @@ MashStep::~MashStep() {
 void MashStep::start() {
 
   _stepState = STEP_INI;
+  _resistance = new ElectricalResistance(RES_PIN);
 }
 
 int MashStep::updateState(float curTemp) {
 
-  
   switch (_stepState) {
     case STEP_INI:
       processInitialState(curTemp);
@@ -109,3 +109,4 @@ boolean MashStep::getAutoFlag() {
   return _auto;
 }
     
+

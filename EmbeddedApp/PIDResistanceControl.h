@@ -15,3 +15,4 @@ class PIDResistanceControl : public IResistanceControl {
     PID *_controller;
     
 };
+

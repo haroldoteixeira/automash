@@ -4,3 +4,4 @@ class IResistanceControl {
     virtual double computeOutput(double input) = 0;
     
 };
+

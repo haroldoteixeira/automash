@@ -16,5 +16,7 @@ void TemperatureSensor::setResolution (int sensorResolution) {
 
 float TemperatureSensor::getTemperature() {
     sensorSet->requestTemperatures();
-    return sensorSet->getTempC(tempSensor) + sensorError;    
+    float retTemp = sensorSet->getTempC(tempSensor);    
+    return retTemp + sensorError;
 }
+

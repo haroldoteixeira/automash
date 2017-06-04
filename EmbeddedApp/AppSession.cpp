@@ -3,9 +3,9 @@
 
 void AppSession::initializeSessionList(){
    
-   _mashStep[0] = new MashStep(20, 54, "PROTEIN REST", FALSE);
-   _mashStep[1] = new MashStep(60, 67, "SACARIFICATION", FALSE);
-   _mashStep[2] = new MashStep(15, 76, "MASH OUT", FALSE);
+   _mashStep[0] = new MashStep(10, 52, "PROTEIN REST", FALSE);
+   _mashStep[1] = new MashStep(60, 64, "SACARIFICATION", FALSE);
+   _mashStep[2] = new MashStep(15, 77, "MASH OUT", FALSE);
    _stepCount = 3; 
 }
 
@@ -19,20 +19,23 @@ AppSession::AppSession(AppDisplay *display) {
 float AppSession::collectTemp() {
   
   return _tempSensor->getTemperature();
+  
 
 }
 
 void AppSession::collectData() {
  
    _curTemperature = collectTemp();
-   if ((_sessionState != INITIAL) && (_sessionState != DONE))
+   if ((_sessionState != INITIAL) && (_sessionState != DONE)){
      _sessionTimer.update();
+   }
    updateState();
+
 }
 
 int AppSession::updateState() {
  
-  
+
   switch(_sessionState)
   {
     case INITIAL:
@@ -49,8 +52,8 @@ int AppSession::updateState() {
 
 void AppSession::processInitialState() {
     int buttonVal = _button->getState();
-    Serial.print("Botão: ");
-    Serial.println(buttonVal);
+    /*Serial.print("BotÃ£o: ");
+    Serial.println(buttonVal);*/
     if (buttonVal == HIGH) {    
       startSession(); 
   } 
@@ -63,6 +66,7 @@ void AppSession::startSession() {
   initializeSessionList();
   _display->clearScreen();
   _mashStep[_curStep]->start();
+  
 }
 
 void AppSession::processHeatingState() {
@@ -101,8 +105,8 @@ void AppSession::nextStep() {
 void AppSession::processWait() {
     
     int buttonVal = _button->getState();
-    Serial.print("Botão: ");
-    Serial.println(buttonVal);
+    /*Serial.print("BotÃ£o: ");
+    Serial.println(buttonVal);*/
     _sessionState = WAITING;
     if (buttonVal == HIGH) {
       nextStep();
@@ -127,6 +131,7 @@ void AppSession::refreshStatus() {
   } else {
     _display->startScreen();
   }
+
 }
 
 void AppSession::logData() {
@@ -140,4 +145,5 @@ void AppSession::logData() {
   Serial.print(";");
   Serial.println(stringTemp);
 }
+
 

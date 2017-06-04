@@ -36,7 +36,14 @@ void AppDisplay::printLine2or3(int line, float temp, String time) {
   
   lcdDisplay->writeDisplay(getLineLabel(line), 0, dispLine);
   lcdDisplay->writeDisplay(time, 5, dispLine);
-  dtostrf(temp, 4, 2, stringTemp);
+  
+  // Handles possible temp sensor error
+  if (temp >= 0) {
+    dtostrf(temp, 4, 2, stringTemp);
+  } else {
+    dtostrf(0, 4, 2, stringTemp);
+  }
+  
   lcdDisplay->writeDisplay("/", 12, dispLine);
   lcdDisplay->writeDisplay(stringTemp, 14, dispLine);
   lcdDisplay->writeDisplay("C", 19, dispLine);
@@ -78,4 +85,5 @@ void AppDisplay::clearScreen() {
   lcdDisplay->clear();
 
 }
+
 

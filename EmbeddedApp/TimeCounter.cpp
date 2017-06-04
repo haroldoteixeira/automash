@@ -24,3 +24,4 @@ int TimeCounter::getMinutesCount() {
   return (_counterValue/60);
 }
 
+

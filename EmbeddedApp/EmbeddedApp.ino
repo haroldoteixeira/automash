@@ -34,7 +34,10 @@ void loop() {
   session->refreshStatus();
   session->logData();
   
+
+
   
     
  
 }
+

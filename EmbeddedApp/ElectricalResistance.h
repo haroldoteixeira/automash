@@ -11,3 +11,4 @@ class ElectricalResistance {
     void turnOff();
     void partialSet(int percentage);
 };
+

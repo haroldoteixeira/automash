@@ -18,3 +18,4 @@ void Display::clear() {
   lcd->clear();
 }
 
+
